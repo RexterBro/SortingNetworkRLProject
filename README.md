@@ -32,4 +32,5 @@ At the end of each training session, the agent will run and the following will b
 Expected output: <br />
 The initial configurations are pretty loose and a perfect (rather large) network should be generated after the first or second training sessions (about 5 to 10 minutes). <br />
 Smaller "maxSortStages" and larger "arraySize" configurations will be more difficult for the agent and will take more time (even hours or days). <br />
-<b> Since the current implementation initilizes the training sets randomly, results regarding runtime may vary between runs </b>
+<b> Since the current implementation initilizes the training sets randomly, results regarding runtime may vary between runs </b> <br />
+<b> For example: setting maxSortStages to 16 for arraySize to 8 can take a couple of hours to a day generate networks smaller than 30 </b> 
