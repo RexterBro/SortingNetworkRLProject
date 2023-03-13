@@ -4,7 +4,7 @@ import sys
 
 try:
     test_array = np.array(sys.argv[1].split(','), dtype=np.int8)
-    verbose = bool(sys.argv[2].split(','))
+    verbose = bool(sys.argv[2].lower() in ("true"))
     network = np.loadtxt('tester_network')
     print('loaded network')
     print('sorting array [' + str(test_array) + ']')
