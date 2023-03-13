@@ -37,4 +37,5 @@ Smaller "maxSortStages" and larger "arraySize" configurations will be more diffi
 <br />
 Using the tester:<br />
 <i> python network_tester.py 1,2,3,4,0,3,2,1 true </i> </br>
+The current best network is automatically written to the <i>tester_network</i> file at each run. <br/>
 Change from true to false to hide details of the sorting process
