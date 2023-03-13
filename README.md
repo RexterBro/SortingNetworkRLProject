@@ -34,3 +34,7 @@ The initial configurations are pretty loose and a perfect (rather large) network
 Smaller "maxSortStages" and larger "arraySize" configurations will be more difficult for the agent and will take more time (even hours or days). <br />
 <b> Since the current implementation initilizes the training sets randomly, results regarding runtime may vary between runs </b> <br />
 <b> For example: setting maxSortStages to 16 for arraySize to 8 can take a couple of hours to a day in order to generate networks smaller than 30 </b> 
+<br />
+Using the tester:<br />
+<i> python network_tester.py 1,2,3,4,0,3,2,1 true </i> </br>
+Change from true to false to hide details of the sorting process
