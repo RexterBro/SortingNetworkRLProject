@@ -227,11 +227,12 @@ def modify_network(network, operation):
     return network, change_in_depth, change_in_comparators
 
 
-def sort_with_network(network, vector):
+def sort_with_network(network, vector, verbose=False):
     """
     sort an array with a given sorting network
     :param network: the sorting network
     :param vector: the array to sort
+    :param verbose: print the whole sorting process
     :return: the array after being sorted by the network
     """
     to_sort = vector.copy()
@@ -241,6 +242,9 @@ def sort_with_network(network, vector):
                 first_index, second_index = comparator_mapping[comp]
                 if to_sort[first_index] > to_sort[second_index]:
                     to_sort[first_index], to_sort[second_index] = to_sort[second_index], to_sort[first_index]
+                if verbose:
+                    print(
+                        'swapping index {0} and {1}, current array {2}'.format(first_index, second_index, str(to_sort)))
     return to_sort
 
 
@@ -549,6 +553,7 @@ if __name__ == '__main__':
                         smallest_network = curr_env.state['num_of_comps']
                         best_networks.clear()
                         best_networks.append(curr_env.state['network'])
+                        np.savetxt('tester_network', curr_env.state['network'])
                     if curr_env.state['network_depth'] < smallest_depth:
                         smallest_depth = curr_env.state['network_depth']
 
