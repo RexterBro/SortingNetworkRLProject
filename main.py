@@ -9,20 +9,22 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.vec_env import DummyVecEnv
 
+# Configurations:
+arraySize = 8
+setSize = 50
+maxSortStages = 30
+num_of_envs = 2
+max_num_of_comps = 5000
+max_modifications = 6000
+learning_timesteps = 30000
+inversions_threshold = 2
+log_path = os.path.join('Training', 'Logs')
+
 # Constants
 delete_op = 0
 add_op = 1
 unassigned = 0
 assigned = 1
-
-# Configurations:
-arraySize = 8
-setSize = 50
-maxSortStages = 16
-max_num_of_comps = 5000
-max_modifications = 6000
-inversions_threshold = 2
-log_path = os.path.join('Training', 'Logs')
 
 
 # Utility function
@@ -400,7 +402,6 @@ class TensorboardCallback(BaseCallback):
 
 if __name__ == '__main__':
     env = SortingNetworkEnv()
-    num_of_envs = 12
     envs = []
     training_sets = []
     hardest_arrays = {}
@@ -428,7 +429,6 @@ if __name__ == '__main__':
 
     # initialize episodic data
     score = 0
-    learning_timesteps = 70000
     stop_training = False
     generated_network = np.zeros((maxSortStages, num_of_comparators))
     unsorted_vectors = []
@@ -457,10 +457,11 @@ if __name__ == '__main__':
 
         # Print statistics
         print("current best score: " + str(best_sort_score))
-        print("perfect networks: " + str(perfect_networks))
+        if len(best_networks) > 0:
+            print("current best network: " + str(best_networks[0]))
+        print("overall perfect networks generated: " + str(perfect_networks))
         print("smallest perfect network - size: " + str(smallest_network))
         print("smallest perfect network - depth: " + str(smallest_depth))
-        print("hardest arrays: " + str(sorted(hardest_arrays.items(), key=lambda item: item[1])))
 
         for i in range(num_of_envs):
             envs[i].state['sets'] = training_sets[i]
@@ -538,7 +539,7 @@ if __name__ == '__main__':
 
                 # check if network is perfect
                 if sort_count == int(math.pow(2, arraySize)):
-                    print("Found perfect network after " + str(steps))
+                    print("Found perfect network after " + str(steps) + " steps")
                     print(generated_network)
                     perfect_networks += 1
 
@@ -547,7 +548,7 @@ if __name__ == '__main__':
                     if curr_env.state['num_of_comps'] < smallest_network:
                         smallest_network = curr_env.state['num_of_comps']
                         best_networks.clear()
-                        best_networks.append(curr_env.state)
+                        best_networks.append(curr_env.state['network'])
                     if curr_env.state['network_depth'] < smallest_depth:
                         smallest_depth = curr_env.state['network_depth']
 
